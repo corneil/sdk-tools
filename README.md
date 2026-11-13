@@ -7,7 +7,7 @@ This project contains scripts and utilities that assist with local development t
 
 ### SDKJ
 
-Usage: `sdkj [<action>] [<partial-version>] [<partial-distro>] [--setup] [--toolchains] [--help]`
+Usage: `sdkj [<action>] [<partial-version>] [<partial-distro>] [--setup] [--toolchains] [--ignore-rc] [--help]`
 
 Manage Java Development Kits (JDKs) with SDKMAN and update the certificate store.
 You can add source `<path-to>/sdkj.sh` in `.profile`, `.bashrc` or `.zshrc` or use sdkj.sh directly.
@@ -32,6 +32,7 @@ Optional.
 * `--setup`       Check all installed JDKs. Copy `~/.certs/jdk_cacerts` to each JDK `lib/security/cacerts` file if the file is missing or different.
 _If you use only `--setup`, `sdkj` updates the certificates and exits._
 * `--toolchains`  When used with `use`, `default`, or `install`, update `~/.m2/toolchains.xml` with yq so the matching JDK version points to the selected JDK path.
+* `--ignore-rc`   When used with `use`, do not modify the `.sdkmanrc` file in the current directory if it exists.
 * `--help`        Show these instructions and exit.
 
 #### Certificate check

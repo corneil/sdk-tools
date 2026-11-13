@@ -3,6 +3,7 @@
 sdkj() {
   local SETUP=false
   local TOOLCHAINS=false
+  local IGNORE_RC=false
   local HELP=false
   local ACTION="" VERSION="" CONTAINS=""
   local ARG_COUNT=0
@@ -12,6 +13,8 @@ sdkj() {
       SETUP=true
     elif [ "$arg" = "--toolchains" ]; then
       TOOLCHAINS=true
+    elif [ "$arg" = "--ignore-rc" ]; then
+      IGNORE_RC=true
     elif [ "$arg" = "--help" ] || [ "$arg" = "-h" ]; then
       HELP=true
     else
@@ -32,7 +35,7 @@ sdkj() {
 
   if [ "$HELP" = true ]; then
     cat <<'EOF'
-Usage: sdkj [<action>] [<partial-version>] [<partial-distro>] [--setup] [--toolchains] [--help]
+Usage: sdkj [<action>] [<partial-version>] [<partial-distro>] [--setup] [--toolchains] [--ignore-rc] [--help]
 
 Manage Java Development Kits (JDKs) with SDKMAN and update the certificate store.
 
@@ -56,6 +59,7 @@ Options:
   --setup       Check all installed JDKs. Copy ~/.certs/jdk_cacerts to each JDK lib/security/cacerts file if the file is missing or different.
                 If you use only --setup, sdkj updates the certificates and exits.
   --toolchains  When used with "use", "default", or "install", update ~/.m2/toolchains.xml with yq so the matching JDK version points to the selected JDK path.
+  --ignore-rc   When used with "use", do not modify the .sdkmanrc file in the current directory if it exists.
   --help        Show these instructions and exit.
 
 Certificate check:
@@ -183,6 +187,23 @@ EOF
     for v in "${INSTALLED_LIST[@]}"; do
       _sdkj_sync_cacerts "$v"
     done
+  }
+
+  _sdkj_update_sdkmanrc() {
+    local cand="$1"
+    if [ ! -f ".sdkmanrc" ] || [ -z "$cand" ]; then
+      return 0
+    fi
+    local temp_file
+    temp_file=$(mktemp 2>/dev/null || echo ".sdkmanrc.tmp.$$")
+    awk -v tag="$cand" '
+      /^[[:space:]]*java[[:space:]]*=/ {
+        print "java=" tag
+        next
+      }
+      { print }
+    ' .sdkmanrc > "$temp_file" && cp "$temp_file" .sdkmanrc
+    rm -f "$temp_file"
   }
 
   local v
@@ -326,6 +347,10 @@ EOF
   if [ -n "$CANDIDATE" ]; then
     _sdkj_run_sdk "$ACTION" java "$CANDIDATE"
     local SDK_STATUS=$?
+
+    if [ "$ACTION" = "use" ] && [ "$IGNORE_RC" = false ]; then
+      _sdkj_update_sdkmanrc "$CANDIDATE"
+    fi
 
     if [ "$SETUP" = true ]; then
       _sdkj_sync_all_cacerts
