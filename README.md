@@ -53,3 +53,6 @@ If the file is missing or different from `~/.certs/jdk_cacerts`, `sdkj` copies `
 * `sdkj install 21`                Install the latest Java 21 Temurin JDK.
 * `sdkj install 21 zulu`           Install the latest Java 21 Zulu JDK.
 * `sdkj --setup`                   Update certificates for all installed JDKs.
+
+
+<a href='https://ko-fi.com/D1D37NFO' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
