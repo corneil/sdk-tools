@@ -3,6 +3,10 @@
 ## Introduction
 This project contains scripts and utilities that assist with local development tools
 
+## Skills & Plugins
+
+* [GitHub Stacked PR](./plugins/gh-stacked-pr/README.md)
+
 ## SKDMAN
 
 ### SDKJ

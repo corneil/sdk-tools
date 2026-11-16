@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "gh-stacked-pr",
+  "version": "1.0.0",
+  "description": "Split uncommitted work into an ordered stack of small pull requests using git and the gh stack CLI extension.",
+  "author": {
+    "name": "Corneil du Plessis"
+  },
+  "homepage": "https://github.com/corneil/sdk-tools/plugins/gh-stacked-pr",
+  "repository": "https://github.com/corneil/sdk-tools",
+  "license": "MIT",
+  "keywords": [
+    "git",
+    "github",
+    "stacked-prs",
+    "pull-requests",
+    "gh-cli",
+    "conventional-commits"
+  ]
+}

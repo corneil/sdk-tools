@@ -1,0 +1,10 @@
+{
+  "name": "gh-stacked-pr",
+  "owner": { "name": "Corneil du Plessis" },
+  "plugins": [
+    {
+      "name": "gh-stacked-pr",
+      "source": "./"
+    }
+  ]
+}

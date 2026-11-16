@@ -1,0 +1,57 @@
+# Stack plan: <reference>
+
+Trunk: <main|master|default branch>
+Reference: <reference>
+Layers: <N>
+
+<!-- One section per layer, bottom to top. Delete this comment. -->
+
+## Layer 1 — <reference>-1-<topic>
+
+- Files:
+  - `<path>`
+- Commit message:
+
+```text
+<type>(<scope>): <summary>
+
+<body. Name what changed and why.>
+
+Depends on: none.
+```
+
+- PR title: `<type>(<scope>): <summary>`
+- PR body: summary, evidence, merge danger, dependency note.
+
+## Layer 2 — <reference>-2-<topic>
+
+- Files:
+  - `<path>`
+- Commit message:
+
+```text
+<type>(<scope>): <summary>
+
+<body.>
+
+Depends on: <reference>-1-<topic> (<what it provides>).
+```
+
+- PR title: `<type>(<scope>): <summary>`
+- PR body: summary, evidence, merge danger, dependency note.
+
+## Execution
+
+1. Review this plan (`commit.md`) and the generated script (`commit.sh`).
+2. Preview the actions without making any changes (dry-run is default):
+   ```bash
+   ./commit.sh
+   ```
+3. When ready, execute the script with `--run` to apply commits, create branches, and submit PRs:
+   ```bash
+   ./commit.sh --run
+   ```
+4. Verify the created stack:
+   ```bash
+   gh stack view --json
+   ```
